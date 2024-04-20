@@ -50,25 +50,69 @@ solution code must meet the following constraints:
 
 
 /* PROBLEM 1. findDuplicatesIterative: Must solve with iteration, not recursion */
-function findDuplicatesIterative(array) {
-  const duplicates = array.filter((item, index) => array.indexOf(item) !== index);
-  return duplicates
-}
+// function findDuplicatesIterative(array) {
+//   const duplicates = array.filter((item, index) => array.indexOf(item) !== index);
+//   return duplicates
+// }
 
-console.log(findDuplicatesIterative([5, 8, 8, 2, 3]));
-// [ 8 ]
-console.log(findDuplicatesIterative([5, 8, 8, 8, 2, 3, 3]));
-// [ 8, 3 ] (only one 8; order of elements does not matter)
-console.log(findDuplicatesIterative(['a', 'word', 'a', 'another', 'word']));
-// [ 'word', 'a' ] (order of elements does not matter)
+// function findDuplicatesRecursive(array) {
+//   let dup = []
+
+//   for (let i = 0; i < array.length; i++) {
+//     let num1 = array[i]
+//     for (let j = i + 1; j < array.length; j++) {
+//       let num2 = array[j]
+//       if ((!dup.includes(num1)) && (num1 === num2)) {
+//         dup.push(num1)
+//       }
+//     }
+//   }
+//   return dup
+//   // findDuplicatesRecursive(array.slice(1))
+// }
+
+// console.log(findDuplicatesIterative([5, 8, 8, 2, 3]));
+// // [ 8 ]
+// console.log(findDuplicatesIterative([5, 8, 8, 8, 2, 3, 3]));
+// // [ 8, 3 ] (only one 8; order of elements does not matter)
+// console.log(findDuplicatesIterative(['a', 'word', 'a', 'another', 'word']));
+// // [ 'word', 'a' ] (order of elements does not matter)
 
 
 
 /* PROBLEM 2. findDuplicatesRecursive: Must solve with recursion */
 
-// Your code here
+function findDuplicatesRecursive(array, dupArr = []) {
+    if (array.length === 0) {
+      return  dupArr
+    }
+    let lastNum = array.pop()
 
+    if (array.includes(lastNum)) {
+      dupArr.push(lastNum)
 
+      let i = 0
+      while (array.includes(lastNum)) {
+        let index = array[i]
+        if (lastNum === index) {
+          array.splice(i, 1)
+          i--
+        }
+        i++
+      }
+      return findDuplicatesRecursive(array, dupArr)
+    }
+    else {
+      return findDuplicatesRecursive(array, dupArr)
+    }
+}
+
+console.log(findDuplicatesRecursive([5, 8, 8, 2, 3]));
+// [ 8 ]
+console.log(findDuplicatesRecursive([5, 8, 8, 8, 2, 3, 3]));
+// [ 8, 3 ] (only one 8; order of elements does not matter)
+console.log(findDuplicatesRecursive(['a', 'word', 'a', 'another', 'word']));
+// [ 'word', 'a' ] (order of elements does not matter)
 
 /* PROBLEM 3. findDuplicatesNoDefault: Must use recursion with no default parameters */
 
